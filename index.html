@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Risk Protection Platform</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon">🛡️</div>
+      <div>
+        <h1>Digital Risk Protection</h1>
+        <p>Brand & App Security Intelligence</p>
+      </div>
+    </div>
+    <span class="status"><span class="dot"></span> Monitoring workspace</span>
+  </header>
+
+  <main class="container">
+    <section class="welcome">
+      <div>
+        <p class="eyebrow">BRAND PROTECTION</p>
+        <h2 id="welcomeTitle">Protect your brand identity</h2>
+        <p id="welcomeCopy">Register official accounts and apps, then review lookalike candidates with explainable risk signals.</p>
+      </div>
+      <div class="shield-art">🔐</div>
+    </section>
+
+    <section class="stats">
+      <article class="stat-card">
+        <div class="stat-top">
+          <span>Flagged candidates</span>
+          <span class="stat-icon purple">◈</span>
+        </div>
+        <h3 id="totalThreats">0</h3>
+        <p>Across monitored channels</p>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-top">
+          <span>High Risk</span>
+          <span class="stat-icon red">⚠</span>
+        </div>
+        <h3 id="highRisk">0</h3>
+        <p>Strong impersonation signals</p>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-top">
+          <span>Official identities</span>
+          <span class="stat-icon blue">◎</span>
+        </div>
+        <h3 id="officialCount">0</h3>
+        <p>Registered accounts and apps</p>
+      </article>
+    </section>
+
+    <nav class="workspace-nav" aria-label="Dashboard sections" role="tablist">
+      <button class="tab-button active" id="overviewTab" type="button" role="tab" aria-selected="true" aria-controls="overviewPanel" data-panel="overviewPanel">Overview</button>
+      <button class="tab-button" id="brandTab" type="button" role="tab" aria-selected="false" aria-controls="brandPanel" data-panel="brandPanel">Brand profile</button>
+      <button class="tab-button" id="monitorTab" type="button" role="tab" aria-selected="false" aria-controls="monitorPanel" data-panel="monitorPanel">Monitor candidates</button>
+    </nav>
+
+    <section class="view-panel active" id="overviewPanel" role="tabpanel" aria-labelledby="overviewTab">
+      <section class="panel">
+        <div class="table-heading">
+          <div>
+            <h2>Suspicious identities</h2>
+            <p>Flagged candidates with the signals that triggered review.</p>
+          </div>
+          <span class="table-count" id="recordCount">0 records</span>
+        </div>
+        <div class="table-tools">
+          <div class="filter-group" role="group" aria-label="Filter candidates">
+            <button class="filter-button active" type="button" data-filter="all" aria-pressed="true">All</button>
+            <button class="filter-button" type="button" data-filter="social" aria-pressed="false">Social</button>
+            <button class="filter-button" type="button" data-filter="app" aria-pressed="false">Apps</button>
+            <button class="filter-button" type="button" data-filter="website" aria-pressed="false">Websites</button>
+          </div>
+          <button class="text-button" id="refreshButton" type="button" title="Refresh dashboard">↻ Refresh</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>IDENTITY</th>
+                <th>CHANNEL</th>
+                <th>RISK</th>
+                <th>DETECTION REASONS</th>
+              </tr>
+            </thead>
+            <tbody id="threatTable">
+              <tr id="emptyRow">
+                <td colspan="4" class="empty-state">
+                  <span>🛡️</span>
+                  <strong>No flagged candidates</strong>
+                  <p>Flagged profiles and applications will appear here.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="disclaimer">Candidate matches are heuristic signals for human review, not proof of malicious activity.</p>
+      </section>
+    </section>
+
+    <section class="view-panel" id="brandPanel" role="tabpanel" aria-labelledby="brandTab" hidden>
+      <section class="panel">
+        <div class="panel-heading">
+          <div>
+            <h2>Official brand profile</h2>
+            <p>Registered identities are excluded from suspicious results.</p>
+          </div>
+          <span class="heading-icon">✎</span>
+        </div>
+        <form id="brandForm">
+          <div class="form-grid">
+            <div class="field">
+              <label for="brandName">Brand name</label>
+              <input id="brandName" type="text" maxlength="120" required>
+            </div>
+            <div class="field">
+              <label for="officialWebsite">Official website</label>
+              <input id="officialWebsite" type="url" placeholder="https://example.com">
+            </div>
+            <div class="field full logo-field">
+              <div>
+                <label for="brandLogo">Official logo</label>
+                <p class="field-note">PNG, JPG, or WebP. Used to compare submitted candidate logos.</p>
+              </div>
+              <div class="logo-control">
+                <img id="brandLogoPreview" alt="Official brand logo" hidden>
+                <input id="brandLogo" type="file" accept="image/png,image/jpeg,image/webp">
+              </div>
+            </div>
+            <div class="field full">
+              <label for="socialAccounts">Official social accounts</label>
+              <textarea id="socialAccounts" rows="3" placeholder="Instagram | https://instagram.com/brand"></textarea>
+              <p class="field-note">One per line: platform | account URL</p>
+            </div>
+            <div class="field full">
+              <label for="officialApps">Official mobile applications</label>
+              <textarea id="officialApps" rows="3" placeholder="Brand App | Brand Inc. | https://store.example/app"></textarea>
+              <p class="field-note">One per line: app name | publisher | store URL</p>
+            </div>
+            <div class="field full">
+              <label for="brandIdentifiers">Other brand identifiers</label>
+              <textarea id="brandIdentifiers" rows="2" placeholder="Product names, support domains, known slogans"></textarea>
+              <p class="field-note">One identifier per line</p>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="primary-button" type="submit">Save brand profile</button>
+            <span class="save-status" id="brandSaveStatus" role="status"></span>
+          </div>
+        </form>
+      </section>
+      <section class="panel registered-panel">
+        <div class="table-heading">
+          <div>
+            <h2>Registered official identities</h2>
+            <p>These exact URLs and app publishers are treated as verified.</p>
+          </div>
+        </div>
+        <div class="official-list" id="officialList">
+          <p class="muted-copy">No official identities registered yet.</p>
+        </div>
+      </section>
+    </section>
+
+    <section class="view-panel" id="monitorPanel" role="tabpanel" aria-labelledby="monitorTab" hidden>
+      <section class="panel">
+        <div class="panel-heading">
+          <div>
+            <h2>Review a candidate</h2>
+            <p>Compare a reported profile, application, or website against the brand profile.</p>
+          </div>
+          <span class="heading-icon">⌕</span>
+        </div>
+        <form id="threatForm">
+          <div class="form-grid">
+            <div class="field">
+              <label for="candidateType">Candidate type</label>
+              <select id="candidateType" required>
+                <option value="social">Social account</option>
+                <option value="app">Mobile application</option>
+                <option value="website">Website</option>
+              </select>
+            </div>
+            <div class="field" id="socialPlatformField">
+              <label for="platform">Social platform</label>
+              <select id="platform">
+                <option>Instagram</option>
+                <option>Facebook</option>
+                <option>X (Twitter)</option>
+                <option>LinkedIn</option>
+                <option>TikTok</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="threatName">Candidate name</label>
+              <input id="threatName" type="text" maxlength="180" required>
+              <p class="field-note" id="nameMatchHint" aria-live="polite"></p>
+            </div>
+            <div class="field full">
+              <label for="threatUrl">Profile, app, or website URL</label>
+              <input id="threatUrl" type="url" placeholder="https://example.com/profile" required>
+            </div>
+            <div class="field" id="developerField" hidden>
+              <label for="candidateDeveloper">App publisher</label>
+              <input id="candidateDeveloper" type="text" maxlength="180">
+            </div>
+            <div class="field full">
+              <label for="candidateDescription">Description or bio</label>
+              <textarea id="candidateDescription" rows="3" maxlength="2000"></textarea>
+            </div>
+            <div class="field full" id="candidateLogoField">
+              <label for="candidateLogo">Candidate logo image</label>
+              <input id="candidateLogo" type="file" accept="image/png,image/jpeg,image/webp">
+              <p class="field-note">A perceptual image comparison runs when an official logo is registered.</p>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="primary-button" id="analyzeButton" type="submit">Analyze candidate</button>
+            <span class="save-status" id="monitorStatus" role="status"></span>
+          </div>
+        </form>
+        <div id="resultBox" class="result-box" hidden aria-live="polite"></div>
+      </section>
+
+      <section class="panel examples-panel">
+        <div class="table-heading">
+          <div>
+            <h2>Name variation signals</h2>
+            <p>Common changes checked against registered brand and app names.</p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="examples-table">
+            <thead><tr><th>OFFICIAL NAME</th><th>CANDIDATE VARIATION</th><th>DETECTION</th></tr></thead>
+            <tbody>
+              <tr><td>PayWave</td><td>PayWavve</td><td>Extra character</td></tr>
+              <tr><td>PayWave</td><td>Pay Wave</td><td>Spacing change</td></tr>
+              <tr><td>PayWave</td><td>PayWave Support</td><td>Added word</td></tr>
+              <tr><td>PayWave</td><td>PayWvae</td><td>Character rearrangement</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+    <footer>
+      Digital Risk Protection Platform
+      <p>Monitoring uses registered data and heuristic candidate analysis; platform-wide discovery requires provider APIs.</p>
+    </footer>
+  </main>
+</body>
+</html>

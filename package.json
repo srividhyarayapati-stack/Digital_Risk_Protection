@@ -1,0 +1,14 @@
+{
+  "name": "digital-risk-protection",
+  "version": "1.0.0",
+  "description": "Digital Risk Protection Platform",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.2.0",
+    "cors": "^2.8.6",
+    "express": "^5.1.0"
+  }
+}
